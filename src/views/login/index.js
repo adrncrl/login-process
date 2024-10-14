@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, useAuth } from "../../context/AuthContext";
 import axios from "axios";
-
 import {
   Button,
   Form,
@@ -18,25 +17,26 @@ import {
 } from "reactstrap";
 
 const LoginPage = () => {
-  const { login } = useContext(AuthContext);
-  const [username, setUsername] = useState("");
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");  
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/auth/login", {
-        username,
+      const response = await axios.post("http://localhost:4000/api/v1/auth/login", {
+        email,  
         password,
       });
 
-      const { token } = response.data;
+      const token = response.data.data.token; 
+      console.log(response);
       console.log(token);
 
       login(token);
     } catch (error) {
-      setError("Invalid username or password");
+      setError("Invalid email or password");
     }
   };
 
@@ -52,13 +52,13 @@ const LoginPage = () => {
               {error && <Alert color="danger">{error}</Alert>}
               <Form onSubmit={handleLogin}>
                 <FormGroup>
-                  <Label for="username">Username</Label>
+                  <Label for="email">Email</Label>  {/* Changed label to Email */}
                   <Input
-                    type="text"
-                    id="username"
-                    placeholder="Enter your username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    type="email"  // Changed input type to email
+                    id="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </FormGroup>

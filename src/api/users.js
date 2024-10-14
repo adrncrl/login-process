@@ -1,4 +1,4 @@
-import instance from "../utils/axios/instance";
+import instance from "../utils/instance";
 import qs from "qs";
 
 const getList = async (params) => {

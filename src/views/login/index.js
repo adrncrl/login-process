@@ -1,35 +1,44 @@
-import React, { useState, useContext } from 'react';
-//import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
+
 import {
-  Button, Form, FormGroup, Label, Input, Container, Row, Col, Card, CardBody, CardTitle, Alert,
-} from 'reactstrap';
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  Alert,
+} from "reactstrap";
 
 const LoginPage = () => {
-  // const { login } = useContext(AuthContext);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Make API call to login endpoint
-  //     const response = await axios.post('http://localhost:your_backend_port/api/login', {
-  //       username,
-  //       password,
-  //     });
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/auth/login", {
+        username,
+        password,
+      });
 
-  //     // Assuming backend sends back a token
-  //     const { token } = response.data;
+      const { token } = response.data;
+      console.log(token);
 
-  //     // Save token to cookies and set authentication state
-  //     login(token);
-  //   } catch (error) {
-  //     setError('Invalid username or password');
-  //   }
-  // };
+      login(token);
+    } catch (error) {
+      setError("Invalid username or password");
+    }
+  };
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100 hw-60">
@@ -37,9 +46,11 @@ const LoginPage = () => {
         <Col md={{ size: 4, offset: 4 }}>
           <Card>
             <CardBody>
-              <CardTitle tag="h3" className="text-center mb-4">Login</CardTitle>
+              <CardTitle tag="h3" className="text-center mb-4">
+                Login
+              </CardTitle>
               {error && <Alert color="danger">{error}</Alert>}
-              <Form onSubmit={""}>
+              <Form onSubmit={handleLogin}>
                 <FormGroup>
                   <Label for="username">Username</Label>
                   <Input
@@ -62,7 +73,9 @@ const LoginPage = () => {
                     required
                   />
                 </FormGroup>
-                <Button color="primary" block type="submit">Login</Button>
+                <Button color="primary" block type="submit">
+                  Login
+                </Button>
               </Form>
             </CardBody>
           </Card>

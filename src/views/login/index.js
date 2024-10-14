@@ -30,11 +30,11 @@ const LoginPage = () => {
         password,
       });
 
-      const token = response.data.data.token; 
+      const { token, ...userData } = response.data.data;
       console.log(response);
-      console.log(token);
+      console.log(token, userData);
 
-      login(token);
+      login(token,userData); 
     } catch (error) {
       setError("Invalid email or password");
     }

@@ -13,64 +13,47 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import { useAuth } from "../../context/AuthContext";
 
 function PageNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuth, user, logout } = useAuth();
   const toggle = () => setIsOpen(!isOpen);
 
+  console.log("Nav auth state:", { isAuth, user });
+
   return (
-    // <Navbar color="light" light expand="md" className="d-flex justify-content-between">
-    //   <Collapse isOpen={isOpen} navbar className="w-100">
-    //     {/* Left-aligned nav items */}
-    //     <Nav className="d-flex flex-row" navbar>
-    //       <NavItem>
-    //         <NavLink tag={Link} to="/login">
-    //           Login
-    //         </NavLink>
-    //       </NavItem>
-    //       <NavItem>
-    //         <NavLink tag={Link} to="/signup">
-    //           Sign-up
-    //         </NavLink>
-    //       </NavItem>
-    //     </Nav>
-
-    //       <UncontrolledDropdown nav inNavbar>
-    //         <DropdownToggle nav caret>
-    //           First Name Here
-    //         </DropdownToggle>
-    //         <DropdownMenu right>
-    //           <DropdownItem>Logout</DropdownItem>
-    //         </DropdownMenu>
-    //       </UncontrolledDropdown>
-    //   </Collapse>
-    // </Navbar>
-
     <div>
       <Navbar color="light" light expand="md">
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            <NavItem>
-              <NavLink tag={Link} to="/login">
-                Login
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to="/signup">
-                Sign-up
-              </NavLink>
-            </NavItem>
+            {!isAuth ? (
+              <>
+                <NavItem>
+                  <NavLink tag={Link} to="/login">
+                    Login
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} to="/signup">
+                    Sign-up
+                  </NavLink>
+                </NavItem>
+              </>
+            ) : <NavbarText>Welcome to Dashboard!</NavbarText>}
           </Nav>
-          <NavbarText>
-            <UncontrolledDropdown inNavbar>
-              <DropdownToggle nav caret>
-                Name
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Logout</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </NavbarText>
+          {isAuth && user ? (
+            <NavbarText>
+              <UncontrolledDropdown inNavbar>
+                <DropdownToggle nav caret>
+                 Hi {user?.firstName} ! 
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={logout}>Logout</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </NavbarText>
+          ) : null}
         </Collapse>
       </Navbar>
     </div>

@@ -11,11 +11,11 @@ function App() {
   return (
     <div className="app">
       <Router>
-        <Page>
-          <AuthProvider>
-            <HandleRoutes routes={routes}/>
-          </AuthProvider>
-        </Page>
+        <AuthProvider>
+          <Page>
+            <HandleRoutes routes={routes} />
+          </Page>
+        </AuthProvider>
       </Router>
     </div>
   );

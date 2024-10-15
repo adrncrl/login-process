@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import UserForm from "./PostForm";
 
-const UserEditModal = ({ userID, handleEdit }) => {
+const PostEditModal = ({ data, handleEdit }) => {
   const [modal, setModal] = useState(false);
-
   const toggle = () => setModal(!modal);
-
   const handleConfirm = async (formData) => {
-    console.log(handleEdit);
-    await handleEdit(userID.id, formData);
+    await handleEdit(data.postId, formData);
     setModal(false);
   };
 
@@ -19,10 +16,10 @@ const UserEditModal = ({ userID, handleEdit }) => {
         Edit
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Edit User</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit Post</ModalHeader>
         <ModalBody>
           <UserForm
-            user={userID}
+            post={data}
             onSubmit={handleConfirm}
             mode="edit"
             toggle={toggle}
@@ -33,4 +30,4 @@ const UserEditModal = ({ userID, handleEdit }) => {
   );
 };
 
-export default UserEditModal;
+export default PostEditModal;

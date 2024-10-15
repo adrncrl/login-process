@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const UserDeleteModal = ({ userID, handleDelete }) => {
+const UserDeleteModal = ({ postId, handleDelete }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
-  const handleConfirm = (userId) => {
-    handleDelete(userId);
+  const handleConfirm = (postId) => {
+    handleDelete(postId);
     setModal(false);
   };
 
@@ -18,9 +18,9 @@ const UserDeleteModal = ({ userID, handleDelete }) => {
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Delete User</ModalHeader>
-        <ModalBody>Are you sure to delete user: {userID}?</ModalBody>
+        <ModalBody>Are you sure to delete user: {postId}?</ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => handleConfirm(userID)}>
+          <Button color="primary" onClick={() => handleConfirm(postId)}>
             Confirm
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>

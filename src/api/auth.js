@@ -1,4 +1,4 @@
-import instance from "../utils/instance";
+import instance from "../axios/instance";
 
 
 const loginUser = async (email, password) => {

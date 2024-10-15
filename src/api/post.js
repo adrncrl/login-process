@@ -1,8 +1,8 @@
-import instance from "../utils/instance";
+import instance from "../axios/instance";
 import qs from "qs";
-import Cookies from "js-cookie"; 
+import Cookies from "js-cookie";
 
-const getToken = () => Cookies.get("token"); 
+const getToken = () => Cookies.get("token");
 
 const getList = async (params) => {
   const queryString = qs.stringify(params, { addQueryPrefix: true });
@@ -11,10 +11,9 @@ const getList = async (params) => {
   try {
     const response = await instance.get(`/post${queryString}`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
-    console.log("post",response);
     return response.data;
   } catch (error) {
     console.log("Fetch error:", error);
@@ -28,7 +27,7 @@ const getPostById = async (postId) => {
   try {
     const response = await instance.get(`/post/${postId}`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -44,7 +43,7 @@ const createPost = async (postData) => {
   try {
     const response = await instance.post("/post", postData, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -60,7 +59,7 @@ const updatePost = async (postId, postData) => {
   try {
     const response = await instance.put(`/post/${postId}`, postData, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -76,7 +75,7 @@ const deletePost = async (postId) => {
   try {
     const response = await instance.delete(`/post/${postId}`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;

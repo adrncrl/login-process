@@ -3,7 +3,6 @@ import { NavLink as Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
-  NavbarToggler,
   Nav,
   NavItem,
   NavLink,
@@ -19,8 +18,6 @@ function PageNav() {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuth, user, logout } = useAuth();
   const toggle = () => setIsOpen(!isOpen);
-
-  console.log("Nav auth state:", { isAuth, user });
 
   return (
     <div>
@@ -50,7 +47,7 @@ function PageNav() {
                 <DropdownToggle nav caret>
                   Hi {user?.firstName} !
                 </DropdownToggle>
-                <DropdownMenu right>
+                <DropdownMenu end>
                   <DropdownItem onClick={logout}>Logout</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

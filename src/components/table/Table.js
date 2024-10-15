@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 import styles from "./styles.module.scss";
+import moment from "moment";
 
 function CustomTable({
   children,
@@ -10,12 +11,7 @@ function CustomTable({
   DeleteModal,
   isLoading,
 }) {
-  const heads = [
-    "ID",
-    "Title",
-    "Message",
-    "Actions",
-  ];
+  const heads = ["Post ID", "Title", "Message", "Created At", "Actions"];
 
   return (
     <div className={styles["table-container"]}>
@@ -23,7 +19,7 @@ function CustomTable({
         <div className={styles["loading"]}>
           <p>Loading...</p>
         </div>
-      ) : (
+      ) : children.length > 0 ? ( 
         <Table striped responsive className={styles["custom-table"]}>
           <thead className={styles["table-head"]}>
             <tr>
@@ -36,21 +32,23 @@ function CustomTable({
           </thead>
           <tbody className={styles["table-body"]}>
             {children?.map((data) => (
-              <tr key={data.userId} className={styles["table-row"]}>
+              <tr key={data.postId} className={styles["table-row"]}>
                 <td>{data.postId}</td>
                 <td>{data.title}</td>
                 <td>{data.message}</td>
-                <td>{data.createdAt}</td>
-                {/* <td>
+                <td>{moment(data.createdAt).format("YYYY-MM-DD | hh:mm:ss A")}</td>
+                <td>
                   <div className={styles["action-buttons"]}>
-                    <DeleteModal userID={data.id} handleDelete={handleDelete} />
-                    <EditModal userID={data} handleEdit={handleEdit} />
+                    <DeleteModal postId={data.postId} handleDelete={handleDelete} />
+                    <EditModal data={data} handleEdit={handleEdit} />
                   </div>
-                </td> */}
+                </td>
               </tr>
             ))}
           </tbody>
         </Table>
+      ) : (
+        <p>No data</p>
       )}
     </div>
   );

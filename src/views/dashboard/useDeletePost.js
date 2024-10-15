@@ -1,25 +1,24 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-function useDeleteUser(deleteUser, triggerRefetch) {
+function useDeletePost(deletePost, triggerRefetch) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleClick = async (userID) => {
+  const handleClick = async (postId) => {
     setSuccess(false);
     setError(null);
     setLoading(true);
 
     try {
-      await deleteUser(userID);
+      await deletePost(postId);
       setSuccess(true);
       triggerRefetch();
-      toast.success("User deleted successfully!"); 
-      console.log("Delete error:", error);
+      toast.success("Post deleted successfully!"); 
     }catch(error){
       setError(error);
-      toast.error("Failed to delete user: " + (error.message || "An error occurred.")); 
+      toast.error("Failed to delete post: " + (error.message || "An error occurred.")); 
     } finally {
       setLoading(false);
     }
@@ -33,4 +32,4 @@ function useDeleteUser(deleteUser, triggerRefetch) {
   };
 }
 
-export default useDeleteUser;
+export default useDeletePost;

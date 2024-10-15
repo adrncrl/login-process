@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
+import { refreshUserData } from "../api/auth";
 
 const AuthContext = createContext({});
 
@@ -21,12 +21,7 @@ const AuthProvider = (props) => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await axios.get("http://localhost:4000/api/v1/auth/refresh", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { token: newToken, ...userData } = response.data.data;
+      const { token: newToken, ...userData } = await refreshUserData(token)
       Cookies.set("token", newToken);
       setIsAuth(true);
       setUser(userData);

@@ -1,10 +1,9 @@
-// src/hooks/useSignUp.js
 import { useState } from "react";
 import serialize from "form-serialize";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { signUpUser } from "../../api/auth";
 
-const useSignUp = (onSuccess) => {
+const useSignUp = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -21,22 +20,11 @@ const useSignUp = (onSuccess) => {
     const { firstName, lastName, email, password } = serializedData;
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/v1/user/signup",
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-        }
-      );
-
+      await signUpUser(firstName, lastName, email, password);
       setSuccess("Successfully signed up");
-      setError(""); 
-      navigate('/login'); 
+      navigate("/login");
     } catch (error) {
       setError("Error signing up. Please try again.");
-      setSuccess(""); 
     }
   };
 

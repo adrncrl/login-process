@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext"; // Ensure this import is uncommented
+import React from "react";
 import {
   Button,
   Form,
@@ -17,10 +16,7 @@ import {
 import useSignUp from "./useSignup";
 
 const SignUpPage = () => {
-  const { login } = useAuth();
-
-
-  const { handleSignUp, error,success } = useSignUp();
+  const { handleSignUp, error, success } = useSignUp();
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
@@ -39,7 +35,7 @@ const SignUpPage = () => {
                   <Input
                     type="text"
                     id="firstName"
-                    name="firstName" 
+                    name="firstName"
                     placeholder="Enter your first name"
                     required
                   />
@@ -59,7 +55,7 @@ const SignUpPage = () => {
                   <Input
                     type="email"
                     id="email"
-                    name="email" 
+                    name="email"
                     placeholder="Enter your email"
                     required
                   />
@@ -69,7 +65,7 @@ const SignUpPage = () => {
                   <Input
                     type="password"
                     id="password"
-                    name="password" 
+                    name="password"
                     placeholder="Enter your password"
                     required
                   />

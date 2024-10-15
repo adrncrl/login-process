@@ -3,6 +3,7 @@ import { useState } from "react";
 import serialize from "form-serialize";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { loginUser } from "../../api/auth";
 
 const useLogin = (onSuccess) => {
   const [error, setError] = useState("");
@@ -20,15 +21,7 @@ const useLogin = (onSuccess) => {
     const { email, password } = serializedData;
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/v1/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      const { token, ...userData } = response.data.data;
+      const { token, ...userData } = await loginUser(email, password);
       onSuccess(token, userData);
       toast.success("Login successfully!"); 
     } catch (error) {

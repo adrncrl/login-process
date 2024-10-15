@@ -32,7 +32,7 @@ function Index() {
         <UserCreateModal handleCreate={handleCreateUser} />
       </div>
       
-      {users.length > 0 ? (
+      {/* {users.length > 0 ? (
         <CustomTable
           children={users}
           handleEdit={handleEditUser}
@@ -44,7 +44,7 @@ function Index() {
       ) : (
         <p>No data</p>
       )}
-      <CustomPagination totalPages={totalPages} />
+      <CustomPagination totalPages={totalPages} /> */}
     </div>
   );
 }

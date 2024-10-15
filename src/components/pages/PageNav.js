@@ -40,13 +40,15 @@ function PageNav() {
                   </NavLink>
                 </NavItem>
               </>
-            ) : <NavbarText>Welcome to Dashboard!</NavbarText>}
+            ) : (
+              <NavbarText>Welcome to Dashboard!</NavbarText>
+            )}
           </Nav>
           {isAuth && user ? (
             <NavbarText>
               <UncontrolledDropdown inNavbar>
                 <DropdownToggle nav caret>
-                 Hi {user?.firstName} ! 
+                  Hi {user?.firstName} !
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={logout}>Logout</DropdownItem>

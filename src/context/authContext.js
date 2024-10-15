@@ -5,37 +5,54 @@ import axios from "axios";
 const AuthContext = createContext({});
 
 const AuthProvider = (props) => {
-  const {children} = props;
+  const { children } = props;
   const [isAuth, setIsAuth] = useState(false);
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
-      setIsAuth(true);
+      fetchUserData(token);
+    } else {
+      setLoading(false); 
     }
   }, []);
 
-
+  const fetchUserData = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/v1/auth/refresh", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { token: newToken, ...userData } = response.data.data;
+      Cookies.set("token", newToken);
+      setIsAuth(true);
+      setUser(userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setIsAuth(false);
+      Cookies.remove("token");
+    } finally {
+      setLoading(false); 
+    }
+  };
 
   const login = (token, userData) => {
     Cookies.set("token", token);
     setIsAuth(true);
-    setUser(userData)
-    
+    setUser(userData);
   };
 
   const logout = () => {
     Cookies.remove("token");
     setIsAuth(false);
-    setUser(null); 
+    setUser(null);
   };
 
-  console.log(user)//has a value
-  console.log(isAuth)//this is true
-
   return (
-    <AuthContext.Provider value={{ isAuth, login, logout, user }}>
+    <AuthContext.Provider value={{ isAuth, login, logout, user, loading }}>
       {children}
     </AuthContext.Provider>
   );

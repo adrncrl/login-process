@@ -18,23 +18,26 @@ import {
 
 const LoginPage = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");  
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/api/v1/auth/login", {
-        email,  
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/api/v1/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
       const { token, ...userData } = response.data.data;
       console.log(response);
       console.log(token, userData);
 
-      login(token,userData); 
+      login(token, userData);
     } catch (error) {
       setError("Invalid email or password");
     }
@@ -52,9 +55,10 @@ const LoginPage = () => {
               {error && <Alert color="danger">{error}</Alert>}
               <Form onSubmit={handleLogin}>
                 <FormGroup>
-                  <Label for="email">Email</Label>  {/* Changed label to Email */}
+                  <Label for="email">Email</Label>{" "}
+                  {/* Changed label to Email */}
                   <Input
-                    type="email"  // Changed input type to email
+                    type="email" // Changed input type to email
                     id="email"
                     placeholder="Enter your email"
                     value={email}

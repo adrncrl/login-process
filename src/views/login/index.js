@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { AuthContext, useAuth } from "../../context/AuthContext";
-import axios from "axios";
 import {
   Button,
   Form,
@@ -15,33 +14,11 @@ import {
   CardTitle,
   Alert,
 } from "reactstrap";
-
+import useLogin from "./useLogin";
+import { ToastContainer } from "react-toastify";
 const LoginPage = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/api/v1/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      const { token, ...userData } = response.data.data;
-      console.log(response);
-      console.log(token, userData);
-
-      login(token, userData);
-    } catch (error) {
-      setError("Invalid email or password");
-    }
-  };
+  const { handleLogin, error } = useLogin(login); 
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100 hw-60">
@@ -53,16 +30,14 @@ const LoginPage = () => {
                 Login
               </CardTitle>
               {error && <Alert color="danger">{error}</Alert>}
-              <Form onSubmit={handleLogin}>
+              <Form onSubmit={handleLogin} noValidate>
                 <FormGroup>
-                  <Label for="email">Email</Label>{" "}
-                  {/* Changed label to Email */}
+                  <Label for="email">Email</Label>
                   <Input
-                    type="email" // Changed input type to email
+                    type="email"
                     id="email"
                     placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email" 
                     required
                   />
                 </FormGroup>
@@ -72,8 +47,7 @@ const LoginPage = () => {
                     type="password"
                     id="password"
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password" 
                     required
                   />
                 </FormGroup>

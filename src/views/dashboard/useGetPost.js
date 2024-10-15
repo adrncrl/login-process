@@ -1,33 +1,35 @@
 import { useState, useEffect } from 'react';
 
 const useGetUsers = (getList, currentPage, itemsPerPage) => {
-  const [users, setUsers] = useState([]);
+  const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
 
-  const fetchUsers = async () => {
+  const fetchPost = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await getList({ page: currentPage, per_page: itemsPerPage });
-      const { data, total_pages } = response;
-      setUsers(data);
-      setTotalPages(total_pages);
+      const response = await getList({limit: itemsPerPage, offset: currentPage });
+      console.log(response)
+      const { data} = response;
+      const {totalPages} = response.meta
+      setPost(data);
+      setTotalPages(totalPages);
     } catch (err) {
       setError(err);
-      console.error("Error fetching users:", err);
+      console.error("Error fetching Posts:", err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchPost();
   }, [currentPage, itemsPerPage]);
 
-  return { users, loading, error, totalPages, refetch: fetchUsers };
+  return { post, loading, error, totalPages, refetch: fetchPost };
 };
 
 export default useGetUsers;

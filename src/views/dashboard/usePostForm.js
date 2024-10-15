@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import serialize from "form-serialize";
 
-const useUserForm = (user, mode, onSubmit) => {
+const usePostForm = (post, mode, onSubmit) => {
   const [formData, setFormData] = useState({
-    firstName: user?.first_name || "",
-    lastName: user?.last_name || "",
-    email: user?.email || "",
+    title: post?.title || "",
+    message: post?.message || "",
   });
 
   useEffect(() => {
     setFormData({
-      firstName: user?.first_name || "",
-      lastName: user?.last_name || "",
-      email: user?.email || "",
+      title: post?.title || "",
+      message: post?.message || "",
     });
-  }, [user]);
+  }, [post]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -29,18 +27,17 @@ const useUserForm = (user, mode, onSubmit) => {
       form.classList.add("was-validated");
       return false;
     }
-    
+
     const serializedData = serialize(form, { hash: true });
     onSubmit(serializedData);
   };
 
   const isCreateMode = mode === "create";
   const isFormEmpty = Object.values(formData).every((value) => !value);
-  const isFormUnchanged = !isCreateMode && (
-    formData.firstName === user?.first_name &&
-    formData.lastName === user?.last_name &&
-    formData.email === user?.email
-  );
+  const isFormUnchanged =
+    !isCreateMode &&
+    formData.title === post?.title &&
+    formData.message === post?.message 
 
   const isSubmitDisabled = isCreateMode ? isFormEmpty : isFormUnchanged;
 
@@ -52,4 +49,4 @@ const useUserForm = (user, mode, onSubmit) => {
   };
 };
 
-export default useUserForm;
+export default usePostForm;

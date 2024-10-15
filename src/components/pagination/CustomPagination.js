@@ -30,10 +30,10 @@ const CustomPagination = ({ totalPages }) => {
         aria-label="Page navigation"
         className={styles["pagination-controls"]}
       >
-        <PaginationItem disabled={currentPage === 1}>
-          <PaginationLink first onClick={() => handlePageChange(1)} />
+        <PaginationItem disabled={currentPage === 0}>
+          <PaginationLink first onClick={() => handlePageChange(0)} />
         </PaginationItem>
-        <PaginationItem disabled={currentPage === 1}>
+        <PaginationItem disabled={currentPage === 0}>
           <PaginationLink
             previous
             onClick={() => handlePageChange(currentPage - 1)}
@@ -41,21 +41,21 @@ const CustomPagination = ({ totalPages }) => {
         </PaginationItem>
 
         {[...Array(totalPages)].map((_, i) => (
-          <PaginationItem active={i + 1 === currentPage} key={i}>
-            <PaginationLink onClick={() => handlePageChange(i + 1)}>
-              {i + 1}
+          <PaginationItem active={i === currentPage} key={i}>
+            <PaginationLink onClick={() => handlePageChange(i)}>
+              {i + 1} 
             </PaginationLink>
           </PaginationItem>
         ))}
 
-        <PaginationItem disabled={currentPage === totalPages}>
+        <PaginationItem disabled={currentPage === totalPages - 1}>
           <PaginationLink
             next
             onClick={() => handlePageChange(currentPage + 1)}
           />
         </PaginationItem>
-        <PaginationItem disabled={currentPage === totalPages}>
-          <PaginationLink last onClick={() => handlePageChange(totalPages)} />
+        <PaginationItem disabled={currentPage === totalPages - 1}>
+          <PaginationLink last onClick={() => handlePageChange(totalPages - 1)} />
         </PaginationItem>
       </Pagination>
     </div>

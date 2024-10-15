@@ -1,23 +1,22 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-const usePagination = (defaultPage = 1, defaultLimit = 10) => {
+const usePagination = (defaultLimit = 10, defaultOffset = 0) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
 
-  const currentPage = Number(searchParams.get("page")) || defaultPage;
-  const itemsPerPage = Number(searchParams.get("per_page")) || defaultLimit;
+  const currentPage = Number(searchParams.get("offset")) || defaultOffset;
+  const itemsPerPage = Number(searchParams.get("limit")) || defaultLimit;
 
-  const updateUrlParams = (page, per_page) => {
-    const newParams = { page, per_page };
+  const updateUrlParams = (limit, offset) => {
+    const newParams = { limit, offset };
     setSearchParams(newParams);
   };
 
-  const handlePageChange = (page) => {
-    updateUrlParams(page, itemsPerPage);
+  const handlePageChange = (offset) => {
+    updateUrlParams(itemsPerPage, offset);
   };
 
-  const handleLimitChange = (per_page) => {
-    updateUrlParams(defaultPage, per_page);
+  const handleLimitChange = (limit) => {
+    updateUrlParams(limit, defaultOffset);
   };
 
   return {

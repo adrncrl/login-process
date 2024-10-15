@@ -12,10 +12,8 @@ function CustomTable({
 }) {
   const heads = [
     "ID",
-    "Avatar",
-    "First Name",
-    "Last Name",
-    "E-mail",
+    "Title",
+    "Message",
     "Actions",
   ];
 
@@ -38,24 +36,17 @@ function CustomTable({
           </thead>
           <tbody className={styles["table-body"]}>
             {children?.map((data) => (
-              <tr key={data.id} className={styles["table-row"]}>
-                <td>{data.id}</td>
-                <td>
-                  <img
-                    src={data.avatar}
-                    alt={`${data.first_name}'s avatar`}
-                    className={styles["avatar-img"]}
-                  />
-                </td>
-                <td>{data.first_name}</td>
-                <td>{data.last_name}</td>
-                <td>{data.email}</td>
-                <td>
+              <tr key={data.userId} className={styles["table-row"]}>
+                <td>{data.postId}</td>
+                <td>{data.title}</td>
+                <td>{data.message}</td>
+                <td>{data.createdAt}</td>
+                {/* <td>
                   <div className={styles["action-buttons"]}>
                     <DeleteModal userID={data.id} handleDelete={handleDelete} />
                     <EditModal userID={data} handleEdit={handleEdit} />
                   </div>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

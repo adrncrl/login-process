@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import UserForm from "./UserForm";
+import UserForm from "./PostForm";
 
 const UserCreateModal = ({ handleCreate }) => {
   const [modal, setModal] = useState(false);
@@ -10,7 +10,6 @@ const UserCreateModal = ({ handleCreate }) => {
   const handleConfirm = async (formData) => {
     setModal(false);
     await handleCreate(formData);
-    
   };
 
   return (

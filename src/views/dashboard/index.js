@@ -1,50 +1,50 @@
 import React from "react";
 import CustomTable from "../../components/table/Table";
-import useGetUsers from "./useGetUsers";
-import { getList, updateUser, deleteUser, createUser } from "../../api/users";
-import useEditUser from "./useEditUser";
-import useDeleteUser from "./useDeleteUser";
-import UserDeleteModal from "./UserDeleteModal";
-import UserEditModal from "./UserEditModal";
+import useGetPost from "./useGetPost";
+import { getList, createPost, updatePost, deletePost} from "../../api/post";
+import useEditPost from "./useEditPost";
+import useDeletePost from "./useDeletePost";
+import PostDeleteModal from "./PostDeleteModal";
+import PostEditModal from "./PostEditModal";
 import CustomPagination from "../../components/pagination/CustomPagination";
 import usePagination from "../../components/pagination/usePagination";
-import UserCreateModal from "./UserCreateModal";
-import useCreateUser from "./useCreateUser";
+import PostCreateModal from "./PostCreateModal";
+import useCreatePost from "./useCreatePost";
 import { ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 import styles from './styles.module.scss';
 
 function Index() {
   const { currentPage, itemsPerPage } = usePagination();
-  const { users, loading: fetchLoading, error, totalPages, refetch } = useGetUsers(getList, currentPage, itemsPerPage);
+  const { post, loading: fetchLoading, error, totalPages, refetch } = useGetPost(getList, currentPage, itemsPerPage);
 
-  const { handleClick: handleCreateUser, loading: createLoading } = useCreateUser(createUser, refetch);
-  const { handleClick: handleDeleteUser, loading: deleteLoading } = useDeleteUser(deleteUser, refetch);
-  const { handleClick: handleEditUser, loading: editLoading } = useEditUser(updateUser, refetch);
+  const { handleClick: handleCreatePost, loading: createLoading } = useCreatePost(createPost, refetch);
+  // const { handleClick: handleDeleteUser, loading: deleteLoading } = useDeletePost(deletePost, refetch);
+  // const { handleClick: handleEditUser, loading: editLoading } = useEditPost(updatePost, refetch);
 
-  const isLoading = fetchLoading || createLoading || editLoading || deleteLoading;
+  // const isLoading = fetchLoading || createLoading || editLoading || deleteLoading;
 
   return (
     <div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick /> 
 
       <div className={styles['create-modal-wrapper']}>
-        <UserCreateModal handleCreate={handleCreateUser} />
+        <PostCreateModal handleCreate={handleCreatePost} />
       </div>
       
-      {/* {users.length > 0 ? (
+      {post.length > 0 ? (
         <CustomTable
-          children={users}
-          handleEdit={handleEditUser}
-          EditModal={UserEditModal}
-          handleDelete={handleDeleteUser}
-          DeleteModal={UserDeleteModal}
-          isLoading={isLoading}
+          children={post}
+          // handleEdit={handleEditUser}
+          // EditModal={UserEditModal}
+          // handleDelete={handleDeleteUser}
+          // DeleteModal={UserDeleteModal}
+          // isLoading={isLoading}
         />
       ) : (
         <p>No data</p>
       )}
-      <CustomPagination totalPages={totalPages} /> */}
+      <CustomPagination totalPages={totalPages} />
     </div>
   );
 }

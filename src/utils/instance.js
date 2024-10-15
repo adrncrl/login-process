@@ -10,4 +10,12 @@ const instance = axios.create({
   },
 });
 
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Handle errors globally if needed
+    return Promise.reject(error);
+  }
+);
+
 export default instance;

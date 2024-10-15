@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import UserForm from "./UserForm";
+import UserForm from "./PostForm";
 
 const UserEditModal = ({ userID, handleEdit }) => {
   const [modal, setModal] = useState(false);

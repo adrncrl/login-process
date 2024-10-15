@@ -19,7 +19,7 @@ function CustomTable({
         <div className={styles["loading"]}>
           <p>Loading...</p>
         </div>
-      ) : children.length > 0 ? ( 
+      ) : children?.length > 0 ? ( 
         <Table striped responsive className={styles["custom-table"]}>
           <thead className={styles["table-head"]}>
             <tr>

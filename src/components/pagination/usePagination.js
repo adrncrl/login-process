@@ -6,6 +6,10 @@ const usePagination = (defaultLimit = 10, defaultOffset = 0) => {
   const currentPage = Number(searchParams.get("offset")) || defaultOffset;
   const itemsPerPage = Number(searchParams.get("limit")) || defaultLimit;
 
+  if (!searchParams.has("limit") && !searchParams.has("offset")) {
+    setSearchParams({ limit: defaultLimit, offset: defaultOffset });
+  }
+
   const updateUrlParams = (limit, offset) => {
     const newParams = { limit, offset };
     setSearchParams(newParams);

@@ -3,12 +3,16 @@ import { Pagination, PaginationItem, PaginationLink, Input } from "reactstrap";
 import usePagination from "./usePagination";
 import styles from "./styles.module.scss";
 
-
 const CustomPagination = (props) => {
-  const {meta} = props;
-  const {totalPages} = meta;
-  
-  const { offset: currentPage, limit: itemsPerPage, handlePageChange, handleLimitChange } = usePagination();
+  const { meta } = props;
+  const { totalPages } = meta;
+
+  const {
+    offset: currentPage,
+    limit: itemsPerPage,
+    handlePageChange,
+    handleLimitChange,
+  } = usePagination();
   const limitOptions = [10, 20, 50];
 
   return (
@@ -19,7 +23,6 @@ const CustomPagination = (props) => {
           type="select"
           onChange={(e) => handleLimitChange(Number(e.target.value))}
           value={itemsPerPage}
-          // value={itemsPerPage}
         >
           {limitOptions.map((limit) => (
             <option key={limit} value={limit}>
@@ -46,7 +49,7 @@ const CustomPagination = (props) => {
         {[...Array(totalPages)].map((_, i) => (
           <PaginationItem active={i === currentPage} key={i}>
             <PaginationLink onClick={() => handlePageChange(i)}>
-              {i + 1} 
+              {i + 1}
             </PaginationLink>
           </PaginationItem>
         ))}
@@ -58,7 +61,10 @@ const CustomPagination = (props) => {
           />
         </PaginationItem>
         <PaginationItem disabled={currentPage === totalPages - 1}>
-          <PaginationLink last onClick={() => handlePageChange(totalPages - 1)} />
+          <PaginationLink
+            last
+            onClick={() => handlePageChange(totalPages - 1)}
+          />
         </PaginationItem>
       </Pagination>
     </div>

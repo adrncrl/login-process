@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { AuthContext, useAuth } from "../../context/AuthContext";
+import React from "react";
+import { useAuth } from "../../context/AuthContext";
 import {
   Button,
-  Form,
   FormGroup,
   Label,
   Input,
@@ -15,10 +14,10 @@ import {
   Alert,
 } from "reactstrap";
 import useLogin from "./useLogin";
-import { ToastContainer } from "react-toastify";
+import CustomForm from "components/form/Form";
 const LoginPage = () => {
   const { login } = useAuth();
-  const { handleLogin, error } = useLogin(login); 
+  const { handleLogin, error } = useLogin(login);
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100 hw-60">
@@ -30,14 +29,14 @@ const LoginPage = () => {
                 Login
               </CardTitle>
               {error && <Alert color="danger">{error}</Alert>}
-              <Form onSubmit={handleLogin} noValidate>
+              <CustomForm onSubmit={handleLogin} >
                 <FormGroup>
                   <Label for="email">Email</Label>
                   <Input
                     type="email"
                     id="email"
                     placeholder="Enter your email"
-                    name="email" 
+                    name="email"
                     required
                   />
                 </FormGroup>
@@ -47,14 +46,14 @@ const LoginPage = () => {
                     type="password"
                     id="password"
                     placeholder="Enter your password"
-                    name="password" 
+                    name="password"
                     required
                   />
                 </FormGroup>
                 <Button color="primary" block type="submit">
                   Login
                 </Button>
-              </Form>
+              </CustomForm>
             </CardBody>
           </Card>
         </Col>

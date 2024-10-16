@@ -3,17 +3,17 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Form,
   FormGroup,
   Label,
   Input,
   FormFeedback,
   Button,
 } from "reactstrap";
-import usePostForm from "./usePostForm";
+import CustomForm from "components/form/Form";
+
 
 const PostAddModal = (props) => {
-  const { data, isOpen, isLoading, isSubmitting, toggle, onSubmit } = props;
+  const { data, isOpen, toggle, onSubmit } = props;
   const { title, message } = data || {};
   const header = data ? "Edit Post" : "Add Post";
 
@@ -21,7 +21,7 @@ const PostAddModal = (props) => {
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={() => toggle()}>{header}</ModalHeader>
       <ModalBody>
-        <Form onSubmit={usePostForm(onSubmit)}>
+        <CustomForm onSubmit={onSubmit}>
           <FormGroup>
             <Label>Title</Label>
             <Input
@@ -47,7 +47,7 @@ const PostAddModal = (props) => {
           <Button type="submit" color="primary">
             {header}
           </Button>
-        </Form>
+        </CustomForm>
       </ModalBody>
     </Modal>
   );

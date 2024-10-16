@@ -10,9 +10,6 @@ function useEditPost(triggerRefetch) {
     isOpen: false,
     id: null,
   });
-
-  
-
   const { isOpen, id } = item;
 
   function toggleOpen(postId) {

@@ -3,11 +3,10 @@ import { getList } from "api/post";
 import usePagination from "components/pagination/usePagination";
 
 const useGetPost = () => {
-  const{searchParams} = usePagination()
+  const { searchParams } = usePagination();
   const [post, setPost] = useState([]);
   const [meta, setMeta] = useState({});
   const [isloading, setIsLoading] = useState(false);
-  // console.log(searchParams.getAll("limit"))
 
   const hasFetched = useRef(false);
 

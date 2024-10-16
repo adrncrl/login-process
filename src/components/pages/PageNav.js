@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink as Link } from "react-router-dom";
 import {
   Collapse,
@@ -15,14 +15,12 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 function PageNav() {
-  const [isOpen, setIsOpen] = useState(false);
   const { isAuth, user, logout } = useAuth();
-  const toggle = () => setIsOpen(!isOpen);
 
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <Collapse isOpen={isOpen} navbar>
+        <Collapse navbar>
           <Nav className="me-auto" navbar>
             {!isAuth ? (
               <>

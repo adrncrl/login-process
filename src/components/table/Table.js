@@ -1,20 +1,17 @@
 import React from "react";
 import { Table } from "reactstrap";
 import styles from "./styles.module.scss";
-import moment from "moment";
 
+function CustomTable(props) {
+  const { heads, children, isLoading } = props;
 
-function CustomTable(props){
-  const {heads, children, isLoading} = props
-
-  return(
-
+  return (
     <div className={styles["table-container"]}>
       {isLoading ? (
         <div className={styles["loading"]}>
           <p>Loading...</p>
         </div>
-      ) : children?.length > 0 ? ( 
+      ) : children?.length > 0 ? (
         <Table striped responsive className={styles["custom-table"]}>
           <thead className={styles["table-head"]}>
             <tr>
@@ -26,22 +23,7 @@ function CustomTable(props){
             </tr>
           </thead>
           <tbody className={styles["table-body"]}>
-
             {children}
-            {/* {children?.map((data) => (
-              <tr key={data.postId} className={styles["table-row"]}>
-                <td>{data.postId}</td>
-                <td>{data.title}</td>
-                <td>{data.message}</td>
-                <td>{moment(data.createdAt).format("YYYY-MM-DD | hh:mm:ss A")}</td>
-                <td>
-                  <div className={styles["action-buttons"]}>
-                    <DeleteModal postId={data.postId} handleDelete={handleDelete} />
-                    <EditModal data={data} handleEdit={handleEdit} />
-                  </div>
-                </td>
-              </tr>
-            ))} */}
           </tbody>
         </Table>
       ) : (
@@ -49,8 +31,6 @@ function CustomTable(props){
       )}
     </div>
   );
-
-  
 }
 // function CustomTable({
 //   children,
@@ -68,7 +48,7 @@ function CustomTable(props){
 //         <div className={styles["loading"]}>
 //           <p>Loading...</p>
 //         </div>
-//       ) : children?.length > 0 ? ( 
+//       ) : children?.length > 0 ? (
 //         <Table striped responsive className={styles["custom-table"]}>
 //           <thead className={styles["table-head"]}>
 //             <tr>

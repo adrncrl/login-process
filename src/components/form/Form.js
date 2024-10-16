@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import serialize from "form-serialize";
+import { Form } from "reactstrap";
 
 const usePostForm = (onSubmit) => {
   const handleSubmit = (event) => {
@@ -18,4 +19,14 @@ const usePostForm = (onSubmit) => {
   return handleSubmit;
 };
 
-export default usePostForm;
+const CustomForm = ({ onSubmit, children, ...props }) => {
+  const handleSubmit = usePostForm(onSubmit);
+
+  return (
+    <Form onSubmit={handleSubmit} {...props}>
+      {children}
+    </Form>
+  );
+};
+
+export default CustomForm;

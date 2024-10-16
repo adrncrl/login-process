@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Button,
-  Form,
   FormGroup,
   Label,
   Input,
@@ -14,6 +13,7 @@ import {
   Alert,
 } from "reactstrap";
 import useSignUp from "./useSignup";
+import CustomForm from "components/form/Form";
 
 const SignUpPage = () => {
   const { handleSignUp, error, success } = useSignUp();
@@ -29,7 +29,7 @@ const SignUpPage = () => {
               </CardTitle>
               {error && <Alert color="danger">{error}</Alert>}
               {success && <Alert color="success">{success}</Alert>}
-              <Form onSubmit={handleSignUp}>
+              <CustomForm onSubmit={handleSignUp}>
                 <FormGroup>
                   <Label for="firstName">First Name</Label>
                   <Input
@@ -73,7 +73,7 @@ const SignUpPage = () => {
                 <Button color="primary" block type="submit">
                   Sign Up
                 </Button>
-              </Form>
+              </CustomForm>
             </CardBody>
           </Card>
         </Col>

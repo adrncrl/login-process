@@ -1,6 +1,6 @@
 import React from "react";
-import useGetPost from "./useGetPost";
 
+import useGetPost from "./useGetPost";
 import useCreatePost from "./useCreatePost";
 import useDeletePost from "./useDeletePost";
 import useEditPost from "./useEditPost";
@@ -10,56 +10,47 @@ import PostAddModal from "./PostAddModal";
 import PostDeleteModal from "./PostDeleteModal";
 import PostTable from "./PostTable";
 
+import CustomPagination from "components/pagination/CustomPagination";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
-import CustomPagination from "components/pagination/CustomPagination";
 
 function Index() {
   const { post, meta, loading, refetch } = useGetPost();
-  const { onAdd, isAdding, isAddOpen, toggleAdd } = useCreatePost(refetch);
-  const { isFetching, isEditing, data, isEditOpen, toggleEdit, onEdit } =
-    useEditPost(refetch);
-  const { isDeleteOpen, id, isDeleting, toggleDelete, onDelete } =
-    useDeletePost(refetch);
+  const { onAdd, isAddOpen, toggleAdd } = useCreatePost(refetch);
+  const { data, isEditOpen, toggleEdit, onEdit } = useEditPost(refetch);
+  const { isDeleteOpen, id, toggleDelete, onDelete } = useDeletePost(refetch);
 
   return (
     <div className={styles["container"]}>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+      />
       <PostCreate toggle={toggleAdd} />
-
       <PostTable
         post={post}
         isLoading={loading}
         toggleDelete={toggleDelete}
         toggleEdit={toggleEdit}
       />
-
-      <PostAddModal
-        isOpen={isAddOpen}
-        isSubmmiting={isAdding}
-        toggle={toggleAdd}
-        onSubmit={onAdd}
-      />
-
+      <PostAddModal isOpen={isAddOpen} toggle={toggleAdd} onSubmit={onAdd} />
       <PostAddModal
         data={data}
-        isLoading={isFetching}
         isOpen={isEditOpen}
-        isSubmmiting={isEditing}
         toggle={toggleEdit}
         onSubmit={onEdit}
       />
-
       <PostDeleteModal
         postId={id}
         isOpen={isDeleteOpen}
         toggleDelete={toggleDelete}
         onSubmit={onDelete}
       />
-
-      <CustomPagination meta={meta}/>
+      <CustomPagination meta={meta} />
     </div>
-
   );
 }
 

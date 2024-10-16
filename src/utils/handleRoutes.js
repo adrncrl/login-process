@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const HandleRoutes = ({routes}) => {
+const HandleRoutes = ({ routes }) => {
   const { isAuth } = useAuth();
 
-  // console.log(useAuth()); 
   return (
     <Routes>
       {routes.map((route, index) => {

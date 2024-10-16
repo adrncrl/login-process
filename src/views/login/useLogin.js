@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { loginUser } from "../../api/auth";
+import { loginUser } from "api/auth";
 
 const useLogin = (login) => {
   const [error, setError] = useState("");

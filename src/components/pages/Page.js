@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import PageFooter from './PageFooter';
 import PageMain from './PageMain';
 import PageNav from './PageNav';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 
 function Page(props) {
 	const {children} = props;

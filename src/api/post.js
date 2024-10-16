@@ -1,4 +1,4 @@
-import { api } from "../axios/instance";
+import { api } from "axios/instance";
 import qs from "qs";
 
 const getList = async (params) => {

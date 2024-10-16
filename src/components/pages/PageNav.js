@@ -12,7 +12,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "context/AuthContext";
 
 function PageNav() {
   const { isAuth, user, logout } = useAuth();

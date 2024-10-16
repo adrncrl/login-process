@@ -1,7 +1,7 @@
-import LandingPage from "../views/landing";
-import LoginPage from "../views/login";
-import SignupPage from "../views/signup";
-import DashboardPage from "../views/dashboard";
+import LandingPage from "views/landing";
+import LoginPage from "views/login";
+import SignupPage from "views/signup";
+import DashboardPage from "views/dashboard";
 
 const routes = [
   { access: "public", path: "/", component: LandingPage },

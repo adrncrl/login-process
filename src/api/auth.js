@@ -1,4 +1,4 @@
-import { api } from "axios/instance";
+import { api } from "instance/instance";
 
 const loginUser = async (data) => {
   const response = await api("post", `/auth/login`, data);
@@ -7,7 +7,7 @@ const loginUser = async (data) => {
 
 const signUpUser = async (data) => {
   const response = await api("post", `/user/signup`, data);
-  return response.data
+  return response.data;
 };
 
 const refreshUserData = async (token) => {

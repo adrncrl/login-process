@@ -14,7 +14,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use((request) => {
   const token = getToken();
-  console.log("Token being sent:", token);
   if (getToken()) {
     request.headers.Authorization = `Bearer ${getToken()}`;
   }

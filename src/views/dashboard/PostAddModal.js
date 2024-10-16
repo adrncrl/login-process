@@ -14,12 +14,12 @@ import usePostForm from "./usePostForm";
 
 const PostAddModal = (props) => {
   const { data, isOpen, isLoading, isSubmitting, toggle, onSubmit } = props;
+  const { title, message } = data || {};
   const header = data ? "Edit Post" : "Add Post";
 
-  const { title, message } = data || {};
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader>{header}</ModalHeader>
+      <ModalHeader toggle={() => toggle()}>{header}</ModalHeader>
       <ModalBody>
         <Form onSubmit={usePostForm(onSubmit)}>
           <FormGroup>

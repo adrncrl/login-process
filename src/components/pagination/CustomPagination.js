@@ -8,7 +8,7 @@ const CustomPagination = (props) => {
   const {meta} = props;
   const {totalPages} = meta;
   
-  const { currentPage, itemsPerPage, handlePageChange, handleLimitChange } = usePagination();
+  const { offset: currentPage, limit: itemsPerPage, handlePageChange, handleLimitChange } = usePagination();
   const limitOptions = [10, 20, 50];
 
   return (
@@ -18,7 +18,7 @@ const CustomPagination = (props) => {
         <Input
           type="select"
           onChange={(e) => handleLimitChange(Number(e.target.value))}
-          value={totalPages}
+          value={itemsPerPage}
           // value={itemsPerPage}
         >
           {limitOptions.map((limit) => (

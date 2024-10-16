@@ -17,7 +17,7 @@ const PostTable = (props) => {
           <td>{moment(data.createdAt).format("YYYY-MM-DD | hh:mm:ss A")}</td>
           <td>
             <div className={styles["action-buttons"]}>
-              <Button onClick={()=> toggleEdit(data)}>Edit</Button>
+              <Button onClick={()=> toggleEdit(data.postId)}>Edit</Button>
               <Button color="danger" onClick={()=> toggleDelete(data.postId)}>Delete</Button>
             </div>
           </td>

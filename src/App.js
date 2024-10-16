@@ -8,7 +8,6 @@ import HandleRoutes from "./utils/handleRoutes";
 
 function App() {
 
-  console.log(process.env.REACT_APP_API_BASE_URL)
   return (
     <div className="app">
       <Router>

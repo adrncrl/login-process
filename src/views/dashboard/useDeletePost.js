@@ -22,7 +22,7 @@ function useDeletePost(triggerRefetch) {
       triggerRefetch();
       toggleOpen();
       toast.success("Post deleted successfully!");
-    } catch (error) {;
+    } catch (error) {
       toast.error(
         "Failed to delete post: " + (error.message || "An error occurred.")
       );
@@ -31,13 +31,13 @@ function useDeletePost(triggerRefetch) {
     }
   };
 
-  const {id, isOpen} = item
+  const { id, isOpen } = item;
   return {
     isDeleteOpen: isOpen,
     id: id,
     isDeleting: isLoading,
     toggleDelete: toggleOpen,
-    onDelete: handleClick
+    onDelete: handleClick,
   };
 }
 

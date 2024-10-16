@@ -1,10 +1,11 @@
 import { useSearchParams } from "react-router-dom";
+import qs from 'qs'
 
 const usePagination = (defaultLimit = 10, defaultOffset = 0) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentPage = Number(searchParams.get("offset")) || defaultOffset;
-  const itemsPerPage = Number(searchParams.get("limit")) || defaultLimit;
+  const offset = Number(searchParams.get("offset")) || defaultOffset;
+  const limit = Number(searchParams.get("limit")) || defaultLimit;
 
   const updateUrlParams = (limit, offset) => {
     const newParams = { limit, offset };
@@ -12,18 +13,21 @@ const usePagination = (defaultLimit = 10, defaultOffset = 0) => {
   };
 
   const handlePageChange = (offset) => {
-    updateUrlParams(itemsPerPage, offset);
+    updateUrlParams(limit, offset);
   };
 
   const handleLimitChange = (limit) => {
     updateUrlParams(limit, defaultOffset);
   };
 
+  const queryString = qs.stringify({ limit, offset });
+
   return {
-    currentPage,
-    itemsPerPage,
+    offset,
+    limit,
     handlePageChange,
     handleLimitChange,
+    searchParams:  queryString
   };
 };
 

@@ -13,16 +13,15 @@ import PostTable from "./PostTable";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
+import CustomPagination from "components/pagination/CustomPagination";
 
 function Index() {
-  const { post, meta, loading, totalPages, refetch } = useGetPost();
+  const { post, meta, loading, refetch } = useGetPost();
   const { onAdd, isAdding, isAddOpen, toggleAdd } = useCreatePost(refetch);
-  const { isFetching, isEditing, data, isEditOpen, toggleEdit, onEdit,
-  } = useEditPost(refetch);
+  const { isFetching, isEditing, data, isEditOpen, toggleEdit, onEdit } =
+    useEditPost(refetch);
   const { isDeleteOpen, id, isDeleting, toggleDelete, onDelete } =
     useDeletePost(refetch);
-
-  // const isLoading = fetchLoading || createLoading || editLoading || deleteLoading;
 
   return (
     <div className={styles["container"]}>
@@ -57,22 +56,10 @@ function Index() {
         toggleDelete={toggleDelete}
         onSubmit={onDelete}
       />
+
+      <CustomPagination meta={meta}/>
     </div>
-    // <div>
-    //   <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick />
-    //   <div className={styles['create-modal-wrapper']}>
-    //     <PostCreateModal handleCreate={handleCreatePost} />
-    //   </div>
-    //   <CustomTable
-    //     children={post}
-    //     handleEdit={handleEditPost}
-    //     EditModal={PostEditModal}
-    //     handleDelete={handleDeletePost}
-    //     DeleteModal={PostDeleteModal}
-    //     isLoading={isLoading}
-    //   />
-    //   <CustomPagination totalPages={totalPages} />
-    // </div>
+
   );
 }
 

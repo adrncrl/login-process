@@ -1,17 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getList } from "api/post";
+import usePagination from "components/pagination/usePagination";
 
-const useGetPost = (searchParams) => {
+const useGetPost = () => {
+  const{searchParams} = usePagination()
   const [post, setPost] = useState([]);
   const [meta, setMeta] = useState({});
   const [isloading, setIsLoading] = useState(false);
-
+  // console.log(searchParams.getAll("limit"))
 
   const hasFetched = useRef(false);
 
   const fetchPost = useCallback(async () => {
     setIsLoading(true);
-
 
     try {
       const response = await getList(searchParams);
@@ -23,7 +24,7 @@ const useGetPost = (searchParams) => {
     } finally {
       setIsLoading(false);
     }
-  }, [getList]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (hasFetched.current) {

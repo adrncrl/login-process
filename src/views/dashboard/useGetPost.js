@@ -1,44 +1,39 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { getList } from "api/post";
 
-const useGetUsers = (getList, currentPage, itemsPerPage) => {
+const useGetPost = (searchParams) => {
   const [post, setPost] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const hasFetched = useRef(false); 
+  const [meta, setMeta] = useState({});
+  const [isloading, setIsLoading] = useState(false);
 
-  const fetchPost = async () => {
-    setLoading(true);
-    setError(null);
+
+  const hasFetched = useRef(false);
+
+  const fetchPost = useCallback(async () => {
+    setIsLoading(true);
+
 
     try {
-      const response = await getList({
-        limit: itemsPerPage,
-        offset: currentPage,
-      });
-      const { data } = response;
-      const { totalPages } = response.meta;
+      const response = await getList(searchParams);
+      const { data, meta } = response;
       setPost(data);
-      setTotalPages(totalPages);
+      setMeta(meta);
     } catch (err) {
-      setError(err);
       console.error("Error fetching Posts:", err);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 600);
+      setIsLoading(false);
     }
-  };
+  }, [getList]);
 
   useEffect(() => {
     if (hasFetched.current) {
-      fetchPost();
+      fetchPost(searchParams);
     } else {
-      hasFetched.current = true; 
+      hasFetched.current = true;
     }
-  }, [currentPage, itemsPerPage]);
+  }, [searchParams, getList]);
 
-  return { post, loading, error, totalPages, refetch: fetchPost };
+  return { post, meta, isloading, refetch: fetchPost };
 };
 
-export default useGetUsers;
+export default useGetPost;

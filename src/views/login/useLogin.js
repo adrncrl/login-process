@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { loginUser } from "../../api/auth";
 
-const useLogin = (onSuccess) => {
+const useLogin = (login) => {
   const [error, setError] = useState("");
   
   const handleLogin = async (event) => {
@@ -17,12 +17,12 @@ const useLogin = (onSuccess) => {
       return false;
     }
 
-    const serializedData = serialize(form, { hash: true });
-    const { email, password } = serializedData;
+    const data = serialize(form, { hash: true });
 
     try {
-      const { token, ...userData } = await loginUser(email, password);
-      onSuccess(token, userData);
+      const { token, ...userData } = await loginUser(data);
+      console.log(token)
+      login(token, userData);
       toast.success("Login successfully!"); 
     } catch (error) {
       setError("Invalid email or password");

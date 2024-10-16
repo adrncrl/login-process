@@ -1,35 +1,39 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { createPost } from "api/post";
 
-function useCreateUser(create, triggerRefetch) {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+function useCreateUser(triggerRefetch) {
+  const [isloading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = async (formData) => {
-    setSuccess(false);
-    setError(null);
-    setLoading(true);
+  function toggleOpen() {
+    setIsOpen(!isOpen);
+  }
+
+  const addPost = async (formData) => {
+    setIsLoading(true);
 
     try {
-      await create(formData);
+      setIsLoading(true)
+      await createPost(formData);
+      setIsLoading(false)
+      toggleOpen()
       triggerRefetch();
-      setSuccess(true);
-      toast.success("User created successfully!"); 
+      toast.success("Post created successfully!");
     } catch (error) {
-      console.log("Edit error:", error);
-      setError(error);
-      toast.error("Failed to create user: " + (error.message || "An error occurred.")); 
+      toast.error(
+        "Failed to create user: " + (error.message || "An error occurred.")
+      );
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return {
-    handleClick,
-    loading,
-    error,
-    success,
+    onAdd: addPost,
+    isAdding: isloading,
+    isAddOpen: isOpen,
+    toggleAdd: toggleOpen,
   };
 }
 

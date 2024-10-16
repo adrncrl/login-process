@@ -1,34 +1,43 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { deletePost } from "api/post";
 
-function useDeletePost(deletePost, triggerRefetch) {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+function useDeletePost(triggerRefetch) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [item, setItems] = useState({
+    isOpen: false,
+    id: null,
+  });
 
-  const handleClick = async (postId) => {
-    setSuccess(false);
-    setError(null);
-    setLoading(true);
+  function toggleOpen(id = "") {
+    setItems({ isOpen: !!id, id });
+  }
+
+  const handleClick = async () => {
+    const { id } = item;
 
     try {
-      await deletePost(postId);
-      setSuccess(true);
+      setIsLoading(true);
+      await deletePost(id);
       triggerRefetch();
-      toast.success("Post deleted successfully!"); 
-    }catch(error){
-      setError(error);
-      toast.error("Failed to delete post: " + (error.message || "An error occurred.")); 
+      toggleOpen();
+      toast.success("Post deleted successfully!");
+    } catch (error) {;
+      toast.error(
+        "Failed to delete post: " + (error.message || "An error occurred.")
+      );
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
+  const {id, isOpen} = item
   return {
-    handleClick,
-    success,
-    error,
-    loading,
+    isDeleteOpen: isOpen,
+    id: id,
+    isDeleting: isLoading,
+    toggleDelete: toggleOpen,
+    onDelete: handleClick
   };
 }
 

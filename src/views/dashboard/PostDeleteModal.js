@@ -1,35 +1,30 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const UserDeleteModal = ({ postId, handleDelete }) => {
+const PostDeleteModal = (props) => {
+  const {postId, isOpen, toggleDelete, onSubmit} = props;
   const [modal, setModal] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  // const toggle = () => setModal(!modal);
 
-  const handleConfirm = (postId) => {
-    handleDelete(postId);
-    setModal(false);
-  };
+  // const handleConfirm = (postId) => {
+  //   handleDelete(postId);
+  //   setModal(false);
+  // };
 
   return (
-    <div>
-      <Button color="danger" onClick={toggle}>
-        Delete
-      </Button>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Delete User</ModalHeader>
+
+      <Modal isOpen={isOpen} toggle={toggleDelete}>
+        <ModalHeader toggle={toggleDelete}>Delete User</ModalHeader>
         <ModalBody>Are you sure to delete user: {postId}?</ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => handleConfirm(postId)}>
-            Confirm
-          </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
+          <Button color="danger" onClick={() => onSubmit(postId)}>
+            Delete
           </Button>
         </ModalFooter>
       </Modal>
-    </div>
+
   );
 };
 
-export default UserDeleteModal;
+export default PostDeleteModal;

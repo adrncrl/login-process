@@ -1,35 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { getPostById, updatePost } from "api/post";
+function useEditPost(triggerRefetch) {
+  const [isloading, setIsLoading] = useState(false);
+  const [isEditing, setIdEditing] = useState(false);
+  const [data, setData] = useState({});
+  const [item, setItems] = useState({
+    isOpen: false,
+    id: null,
+  });
 
-function useEditPost(editUser, triggerRefetch) {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { isOpen, id } = item;
 
-  const handleClick = async (postId, formData) => {
-    setSuccess(false);
-    setError(null);
-    setLoading(true);
+  function toggleOpen(postId) {
+    setItems({ isOpen: postId, id: postId });
+  }
 
+  const getData = async () => {
     try {
-      await editUser(postId, formData);
-      triggerRefetch();
-      setSuccess(true);
-      toast.success("Post updated successfully!"); 
+      setIsLoading(true);
+      const data = await getPostById(id);
+      setData(data);
     } catch (error) {
-      console.log("Edit error:", error);
-      setError(error);
-      toast.error("Failed to update post: " + (error.message || "An error occurred.")); 
+      toast.error(
+        "Failed to update post: " + (error.message || "An error occurred.")
+      );
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
+  const handleClick = async (formData) => {
+    try {
+      setIdEditing(true);
+      await updatePost(id, formData);
+      triggerRefetch();
+      toggleOpen(null);
+      toast.success("Post updated successfully!");
+    } catch (error) {
+      toast.error(
+        "Failed to update post: " + (error.message || "An error occurred.")
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (id) getData();
+    else setData({});
+  }, [id]);
+
   return {
-    handleClick,
-    loading,
-    error,
-    success,
+    isFetching: isloading,
+    isEditing,
+    data,
+    isEditOpen: isOpen,
+    toggleEdit: toggleOpen,
+    onEdit: handleClick,
   };
 }
 

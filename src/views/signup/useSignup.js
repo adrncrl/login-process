@@ -17,10 +17,10 @@ const useSignUp = () => {
     }
 
     const serializedData = serialize(form, { hash: true });
-    const { firstName, lastName, email, password } = serializedData;
+    //const { firstName, lastName, email, password } = serializedData;
 
     try {
-      await signUpUser(firstName, lastName, email, password);
+      await signUpUser(serializedData);
       setSuccess("Successfully signed up");
       navigate("/login");
     } catch (error) {
